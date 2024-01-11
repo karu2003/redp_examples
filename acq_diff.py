@@ -33,9 +33,9 @@ for i in range(100):
         if rp_s.rx_txt() == '1':
             break
 
-    # rp_s.tx_txt('ACQ:SOUR1:DATA:OLD:N? 800')
+    rp_s.tx_txt('ACQ:SOUR1:DATA:OLD:N? 800')
     # rp_s.tx_txt("ACQ:SOUR1:DATA:Start:N? 0,800")
-    rp_s.tx_txt('ACQ:SOUR1:DATA?')
+    # rp_s.tx_txt('ACQ:SOUR1:DATA?')
 
     buff_string = rp_s.rx_txt()
     buff_string = buff_string.strip('{}\n\r').replace("  ", "").split(',')
@@ -45,10 +45,13 @@ for i in range(100):
     arr = np.array(buff)
     mask1 = (arr[:-1] < thresh) & (arr[1:] > thresh)
     rising_edge = np.flatnonzero(mask1)+1
-    buff = buff[rising_edge[0]:rising_edge[1]]
 
-    plot.plot(buff)
-    # sleep(0.1)
+    if len(rising_edge) == 3:
+        # print(rising_edge)
+        buff = buff[rising_edge[0]:rising_edge[1]]
+
+        plot.plot(buff)
+        sleep(0.01)
 
 plot.ylabel('Voltage')
 plot.show()
