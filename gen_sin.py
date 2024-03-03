@@ -6,7 +6,7 @@ import redpitaya_scpi as scpi
 # wave_form = 'sine'
 wave_form = "SQUARE"
 freq = 500000
-ampl = 1
+ampl = 0.5
 
 IP = "192.168.0.15"
 rp_s = scpi.scpi(IP)
